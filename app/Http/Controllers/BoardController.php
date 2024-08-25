@@ -11,6 +11,7 @@ use App\Models\Board;
 use App\Models\Member;
 use App\Models\User;
 use App\Http\Resources\BoardResource;
+use App\Http\Resources\BoardInviteResource;
 use Illuminate\Http\Request;
 
 class BoardController
@@ -90,8 +91,12 @@ class BoardController
             $memberInvite->user_id = User::where('email',$request['user'])->first()->id;
             $memberInvite->save();
             return response()->json(['message' => 'Invite send'], 200);
-        }
-        
-        
+        }   
     }
+
+    public function indexBoardInvites (Request $request) {
+        return BoardInviteResource::collection(Member::where('user_id', $request->user()->id)->where('accepted', false)->paginate(50));
+    }
+
+    
 }
