@@ -20,3 +20,4 @@ Route::group([ 'middleware' => 'auth:sanctum', 'prefix' => '/friends'], function
 Route::apiResource('/board', BoardController::class)->middleware(['auth:sanctum']);
 Route::put('/boards/{board}/invite-to-board',[BoardController::class, 'inviteUser'])->middleware(['auth:sanctum']);
 Route::get('/members',[BoardController::class, 'indexBoardInvites'])->middleware(['auth:sanctum']);
+Route::put('/members/{member}',[BoardController::class, 'acceptBoardInvite'])->middleware(['auth:sanctum']);

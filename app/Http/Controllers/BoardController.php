@@ -98,5 +98,10 @@ class BoardController
         return BoardInviteResource::collection(Member::where('user_id', $request->user()->id)->where('accepted', false)->paginate(50));
     }
 
-    
+    public function acceptBoardInvite(Member $member, Request $request) {
+        if ($request->user()->id != $member->user_id) return response()->json(['message' => 'You can not accept this invite'], 403);
+        $member->accepted = true;
+        $member->save();
+        return response()->json(['message' => 'Invite accepted'], 200);
+    }
 }
