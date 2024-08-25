@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BoardController;
 
 Route::apiResource('/users', UserController::class);
 Route::post('/login', [UserController::class, 'login']);
@@ -16,4 +17,5 @@ Route::group([ 'middleware' => 'auth:sanctum', 'prefix' => '/friends'], function
 });
 
 
-
+Route::apiResource('/board', BoardController::class)->middleware(['auth:sanctum']);
+Route::put('/boards/{board}/invite-to-board',[BoardController::class, 'inviteUser'])->middleware(['auth:sanctum']);
