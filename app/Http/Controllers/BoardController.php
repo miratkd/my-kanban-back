@@ -11,6 +11,7 @@ use App\Models\Board;
 use App\Models\Member;
 use App\Models\User;
 use App\Http\Resources\BoardResource;
+use App\Http\Resources\FullBoardResource;
 use App\Http\Resources\BoardInviteResource;
 use Illuminate\Http\Request;
 
@@ -50,7 +51,7 @@ class BoardController
      */
     public function show(Board $board, EditBoard $request)
     {
-        return new BoardResource($board);
+        return new FullBoardResource($board);
     }
 
     /**
