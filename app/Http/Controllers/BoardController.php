@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateBoardRequest;
 use App\Http\Requests\EditBoard;
 use App\Http\Requests\BorderOwnerRequest;
 use App\Http\Requests\InviteToBoardRequest;
+use App\Http\Requests\RemoveMemberRequest;
 use App\Models\Board;
 use App\Models\Member;
 use App\Models\User;
@@ -104,5 +105,10 @@ class BoardController
         $member->accepted = true;
         $member->save();
         return response()->json(['message' => 'Invite accepted'], 200);
+    }
+
+    public function removeUser(RemoveMemberRequest $request, Board $board, Member $member) {
+        $member->delete();
+        return response()->json(['message' => 'Member remove from the board'], 200);
     }
 }

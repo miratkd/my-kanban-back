@@ -17,7 +17,7 @@ class MemberResource extends JsonResource
         $user = $this->user()->first();
         return [
             'id' => $user->id,
-            'invite_ id' => $this->id,
+            'member_id' => $this->id,
             'name' => $user->name
         ];
     }
