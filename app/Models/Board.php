@@ -21,6 +21,11 @@ class Board extends Model
         return $this->hasMany(Member::class);
     }
 
+    public function statuses(): HasMany
+    {
+        return $this->hasMany(Status::class);
+    }
+
     public function haveAccess($id) {
         if ($this->user_id == $id) return true;
         return false;

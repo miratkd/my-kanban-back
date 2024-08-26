@@ -7,10 +7,12 @@ use App\Http\Requests\UpdateBoardRequest;
 use App\Http\Requests\EditBoard;
 use App\Http\Requests\BorderOwnerRequest;
 use App\Http\Requests\InviteToBoardRequest;
+use App\Http\Requests\StoreStatusRequest;
 use App\Http\Requests\RemoveMemberRequest;
 use App\Models\Board;
 use App\Models\Member;
 use App\Models\User;
+use App\Models\Status;
 use App\Http\Resources\BoardResource;
 use App\Http\Resources\FullBoardResource;
 use App\Http\Resources\BoardInviteResource;
@@ -110,5 +112,15 @@ class BoardController
     public function removeUser(RemoveMemberRequest $request, Board $board, Member $member) {
         $member->delete();
         return response()->json(['message' => 'Member remove from the board'], 200);
+    }
+
+    public function addStatus(Board $board, StoreStatusRequest $request) {
+        $newStatus = new Status();
+        $newStatus->title = $request['title'];
+        $newStatus->color = $request['color'];
+        $newStatus->position = $board->statuses()->count();
+        $newStatus->board_id = $board->id;
+        $newStatus->save();
+        return new FullBoardResource($board);
     }
 }
