@@ -30,4 +30,25 @@ class Board extends Model
         if ($this->user_id == $id) return true;
         return false;
     }
+
+    public function initStatuses() {
+        $genericStatus = new Status();
+        $genericStatus->title = 'Aguardando';
+        $genericStatus->color = 'yellow';
+        $genericStatus->position = 0;
+        $genericStatus->board_id = $this->id;
+        $genericStatus->save();
+        $genericStatus = new Status();
+        $genericStatus->title = 'Em andamento';
+        $genericStatus->color = 'blue';
+        $genericStatus->position = 1;
+        $genericStatus->board_id = $this->id;
+        $genericStatus->save();
+        $genericStatus = new Status();
+        $genericStatus->title = 'Finalizado';
+        $genericStatus->color = 'green';
+        $genericStatus->position = 2;
+        $genericStatus->board_id = $this->id;
+        $genericStatus->save();
+    }
 }

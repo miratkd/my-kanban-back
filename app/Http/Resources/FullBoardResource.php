@@ -21,7 +21,7 @@ class FullBoardResource extends JsonResource
             'description' => $this->description,
             'owner' =>  new UserResource($this->owner()->first()),
             'members' => MemberResource::collection($this->members()->get()),
-            'status' => StatusResource::collection($this->statuses()->get())
+            'status' => StatusResource::collection($this->statuses()->orderBy('position')->get())
         ];
     }
 }

@@ -46,7 +46,8 @@ class BoardController
         $board->description = $request['description'];
         $board->user_id = $request->user()->id;
         $board->save();
-        return new BoardResource($board);
+        $board->initStatuses();
+        return new FullBoardResource($board);
     }
 
     /**
