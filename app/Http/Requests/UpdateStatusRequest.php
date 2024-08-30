@@ -4,15 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateStatusRequest extends FormRequest
+class UpdateStatusRequest extends StatusOwnerRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return false;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -22,7 +15,7 @@ class UpdateStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'position' => ['required', 'numeric']
         ];
     }
 }

@@ -4,16 +4,15 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
-use App\Models\Board;
 
-class BorderOwnerRequest extends FormRequest
+class StatusOwnerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(Request $request): bool
     {
-        if ($request->route('board')->user_id == $request->user()->id) return true;
+        if ($request->route('status')->board()->first()->user_id == $request->user()->id) return true;
         return false;
     }
 
