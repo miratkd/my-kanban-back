@@ -28,6 +28,7 @@ class Board extends Model
 
     public function haveAccess($id) {
         if ($this->user_id == $id) return true;
+        if (count($this->members()->where('user_id', $id)->get())>0) return true;
         return false;
     }
 

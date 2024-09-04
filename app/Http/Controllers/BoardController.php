@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBoardRequest;
 use App\Http\Requests\UpdateBoardRequest;
-use App\Http\Requests\EditBoard;
+use App\Http\Requests\ShowBoardRequest;
 use App\Http\Requests\BorderOwnerRequest;
 use App\Http\Requests\InviteToBoardRequest;
 use App\Http\Requests\StoreStatusRequest;
@@ -16,6 +16,7 @@ use App\Models\Status;
 use App\Http\Resources\BoardResource;
 use App\Http\Resources\FullBoardResource;
 use App\Http\Resources\BoardInviteResource;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class BoardController
@@ -53,7 +54,7 @@ class BoardController
     /**
      * Display the specified resource.
      */
-    public function show(Board $board, EditBoard $request)
+    public function show(Board $board, ShowBoardRequest $request)
     {
         return new FullBoardResource($board);
     }
@@ -123,5 +124,12 @@ class BoardController
         $newStatus->board_id = $board->id;
         $newStatus->save();
         return new FullBoardResource($board);
+    }
+
+    public function boardsImIn (Request $request){
+        $list = Board::whereHas('members', function (Builder $query) use ($request) {
+            $query->where('user_id', $request->user()->id)->where('accepted', true);
+        })->paginate(50);
+        return BoardResource::collection($list);
     }
 }

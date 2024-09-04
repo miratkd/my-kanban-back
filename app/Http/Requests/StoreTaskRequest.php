@@ -2,18 +2,18 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Board;
+use App\Models\Status;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
-class EditBoard extends FormRequest
+class StoreTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(Request $request): bool
     {
-        if ($request->route('board')->haveAccess($request->user()->id)) return true;
+        if (Status::find($request['statusId'])->board()->first()->haveAccess($request->user()->id)) return true;
         return false;
     }
 
@@ -25,7 +25,8 @@ class EditBoard extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'statusId' => ['required', 'exists:statuses,id'],
+            'title' => 'required',
         ];
     }
 }

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\TaskController;
 
 Route::apiResource('/users', UserController::class);
 Route::post('/login', [UserController::class, 'login']);
@@ -22,11 +23,13 @@ Route::group([ 'middleware' => 'auth:sanctum' ], function(){
 
     Route::put('/boards/{board}/invite-to-board',[BoardController::class, 'inviteUser']);
     Route::put('/boards/{board}/add-status',[BoardController::class, 'addStatus']);
+    Route::get('/boards/im-in', [BoardController::class, 'boardsImIn']);
     Route::get('/members',[BoardController::class, 'indexBoardInvites']);
     Route::put('/members/{member}',[BoardController::class, 'acceptBoardInvite']);
     Route::put('/boards/{board}/remove/members/{member}',[BoardController::class, 'removeUser']);
 
     Route::apiResource('/statuses', StatusController::class);
+    Route::apiResource('/tasks', TaskController::class);
 });
 
 
