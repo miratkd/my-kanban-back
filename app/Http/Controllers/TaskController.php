@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Requests\StoreSubTaskRequest;
 use App\Http\Resources\taskResource;
 use App\Models\Status;
 use App\Models\Task;
+use App\Models\SubTask;
 
 class TaskController
 {
@@ -73,5 +75,14 @@ class TaskController
     {
         $task->delete();
         return response()->json(['message'=>'Task deleted'], 200);
+    }
+
+    public function addSubTask(StoreSubTaskRequest $request, Task $task)
+    {
+        $subTask = new SubTask();
+        $subTask->task_id = $task->id;
+        $subTask->text = $request['text'];
+        $subTask->save();
+        return response()->json(['message'=>'SubTask added'], 200);
     }
 }

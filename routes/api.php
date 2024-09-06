@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\SubTaskController;
 
 Route::apiResource('/users', UserController::class);
 Route::post('/login', [UserController::class, 'login']);
@@ -30,6 +31,8 @@ Route::group([ 'middleware' => 'auth:sanctum' ], function(){
 
     Route::apiResource('/statuses', StatusController::class);
     Route::apiResource('/tasks', TaskController::class);
+    Route::put('/tasks/{task}/add-sub-task', [TaskController::class, 'addSubTask']);
+    Route::apiResource('/sub-tasks',SubTaskController::class);
 });
 
 
