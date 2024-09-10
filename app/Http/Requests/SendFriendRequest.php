@@ -22,7 +22,7 @@ class SendFriendRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'friend' => ['required'],
+            'friend' => ['required', 'exists:users,email'],
         ];
     }
 }

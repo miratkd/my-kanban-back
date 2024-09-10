@@ -87,7 +87,7 @@ class UserController
     }
 
     public function sendFriendRequest (SendFriendRequest $request) {
-        $friend = User::findOrFail($request['friend']);
+        $friend = User::where('email', $request['friend'])->first();
         Friend::create(['user_id' => $request->user()->id, 'friend_id' => $friend->id]);
         return Response()->json(['message'=>'Invite send'], 200);
     }
